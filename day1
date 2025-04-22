@@ -1,0 +1,29 @@
+import yfinance as yf
+import pandas as pd
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+from statsmodels.tsa.stattools import adfuller 
+import numpy as np  # <--- for Sharpe ratio
+
+
+
+tickers = ['KO', 'PEP']
+
+# Download data and extract just the adjusted close prices
+data = yf.download(tickers, start="2018-01-01", end="2024-01-01", auto_adjust=True)['Close']
+data.dropna(inplace=True)
+
+# Check the data
+print(data.head())
+
+# Plotting
+plt.figure(figsize=(12, 6))
+plt.plot(data['KO'], label='Coca-Cola (KO)', linewidth=2)
+plt.plot(data['PEP'], label='PepsiCo (PEP)', linewidth=2)
+plt.title('Price History: KO vs. PEP (2018–2024)', fontsize=16)
+plt.xlabel('Date')
+plt.ylabel('Adjusted Closing Price ($)')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
